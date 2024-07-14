@@ -10,6 +10,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -71,5 +72,14 @@ class LibraryManagementServiceTest {
         when(user.borrowBook("Java")).thenReturn(true);
 
         assertFalse(libraryManagementService.borrowBooks("Java"));
+    }
+
+    @Test
+    void shouldBeAbleToReturnBook() {
+        Book book = new Book("Java");
+
+        when(user.getBorrowedBooks()).thenReturn(Set.of(book));
+
+        assertTrue(libraryManagementService.returnBook("Java"));
     }
 }

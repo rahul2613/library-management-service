@@ -29,6 +29,10 @@ public class User {
         return borrowedBooks.size() < BORROW_LIMIT;
     }
 
+    public void returnBook(Book book) {
+        borrowedBooks.remove(book);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

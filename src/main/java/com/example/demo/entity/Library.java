@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Library {
-    private final Map<Book, Integer> books;
+    private Map<Book, Integer> books;
 
     public Library(Map<Book, Integer> books) {
         this.books = books;
@@ -16,6 +16,20 @@ public class Library {
 
     public boolean isBookAvailable(String bookName) {
         return books.containsKey(new Book(bookName));
+    }
+
+    public void removeBook(Book book) {
+        if (books.get(book) == 1) {
+            books.remove(book);
+        }
+        if (books.containsKey(book)) {
+            Integer existingNumberOfCopies = books.get(book);
+            books.put(book, existingNumberOfCopies - 1);
+        }
+    }
+
+    public void addBook(Book book) {
+        books.put(book, books.getOrDefault(book, 0) + 1);
     }
 
 
