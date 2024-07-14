@@ -1,7 +1,5 @@
 package com.example.demo.entity;
 
-import com.example.demo.exception.UserException;
-
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -23,15 +21,11 @@ public class User {
         return borrowedBooks;
     }
 
-    public boolean borrowBook(String bookName) throws UserException {
-        if (canBorrow()) {
+    public boolean borrowBook(String bookName) {
             return borrowedBooks.add(new Book(bookName));
-        } else {
-            throw new UserException("Borrow limit exceeds, Max 2 books can be borrowed");
-        }
     }
 
-    private boolean canBorrow() {
+    public boolean canBorrow() {
         return borrowedBooks.size() < BORROW_LIMIT;
     }
 

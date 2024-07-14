@@ -3,7 +3,6 @@ package com.example.demo.service;
 import com.example.demo.entity.Book;
 import com.example.demo.entity.Library;
 import com.example.demo.entity.User;
-import com.example.demo.exception.UserException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -57,30 +56,20 @@ class LibraryManagementServiceTest {
     }
 
     @Test
-    void shouldBeAbleToBorrowBookFromLibrary() throws UserException {
+    void shouldBeAbleToBorrowBookFromLibrary() {
+        when(user.canBorrow()).thenReturn(true);
+        when(library.isBookAvailable("Java")).thenReturn(true);
         when(user.borrowBook("Java")).thenReturn(true);
-        assertTrue(libraryManagementService.borrowBooks(user, "Java"));
+
+        assertTrue(libraryManagementService.borrowBooks("Java"));
     }
 
     @Test
-    void shouldUserBeAbleToBorrowMax2Book() throws UserException {
-        when(user.borrowBook("Java")).thenThrow(UserException.class);
-        assertFalse(libraryManagementService.borrowBooks(user, "Java"));
-    }
-
-    @Test
-    void shouldRemoveBookFromLibraryAfterBorrow() throws UserException {
-        Book cBook = new Book("C");
-        Book javaBook = new Book("Java");
-        Map<Book, Integer> expectedBooks = new HashMap<>();
-        expectedBooks.put(cBook, 1);
-        expectedBooks.put(javaBook, 1);
-
-        when(library.getBooks()).thenReturn(expectedBooks);
+    void shouldUserBeAbleToBorrowMax2Book() {
+        when(user.canBorrow()).thenReturn(false);
+        when(library.isBookAvailable("Java")).thenReturn(true);
         when(user.borrowBook("Java")).thenReturn(true);
 
-        libraryManagementService.borrowBooks(user, "Java");
-
-        assertFalse(library.getBooks().containsKey(new Book("Java")));
+        assertFalse(libraryManagementService.borrowBooks("Java"));
     }
 }

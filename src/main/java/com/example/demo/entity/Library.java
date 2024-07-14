@@ -14,6 +14,11 @@ public class Library {
         return books;
     }
 
+    public boolean isBookAvailable(String bookName) {
+        return books.containsKey(new Book(bookName));
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -3,7 +3,6 @@ package com.example.demo.service;
 import com.example.demo.entity.Book;
 import com.example.demo.entity.Library;
 import com.example.demo.entity.User;
-import com.example.demo.exception.UserException;
 
 import java.util.Map;
 
@@ -20,15 +19,13 @@ public class LibraryManagementService {
         return library.getBooks();
     }
 
-    public boolean borrowBooks(User user, String bookName) {
-        try {
+    public boolean borrowBooks(String bookName) {
+        if (library.isBookAvailable(bookName) && user.canBorrow()) {
             user.borrowBook(bookName);
             library.getBooks().remove(new Book(bookName));
             return true;
-        } catch (UserException userException) {
-            System.out.println("Exception occured while borrowing book");
-            return false;
         }
+        return false;
     }
 }
 
