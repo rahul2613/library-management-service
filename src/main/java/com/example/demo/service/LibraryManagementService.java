@@ -22,7 +22,9 @@ public class LibraryManagementService {
 
     public boolean borrowBooks(User user, String bookName) {
         try {
-            return user.borrowBook(bookName);
+            user.borrowBook(bookName);
+            library.getBooks().remove(new Book(bookName));
+            return true;
         } catch (UserException userException) {
             System.out.println("Exception occured while borrowing book");
             return false;

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -65,5 +66,21 @@ class LibraryManagementServiceTest {
     void shouldUserBeAbleToBorrowMax2Book() throws UserException {
         when(user.borrowBook("Java")).thenThrow(UserException.class);
         assertFalse(libraryManagementService.borrowBooks(user, "Java"));
+    }
+
+    @Test
+    void shouldRemoveBookFromLibraryAfterBorrow() throws UserException {
+        Book cBook = new Book("C");
+        Book javaBook = new Book("Java");
+        Map<Book, Integer> expectedBooks = new HashMap<>();
+        expectedBooks.put(cBook, 1);
+        expectedBooks.put(javaBook, 1);
+
+        when(library.getBooks()).thenReturn(expectedBooks);
+        when(user.borrowBook("Java")).thenReturn(true);
+
+        libraryManagementService.borrowBooks(user, "Java");
+
+        assertFalse(library.getBooks().containsKey(new Book("Java")));
     }
 }

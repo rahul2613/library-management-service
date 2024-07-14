@@ -32,7 +32,7 @@ public class User {
     }
 
     private boolean canBorrow() {
-        return borrowedBooks.size() < BORROW_LIMIT ;
+        return borrowedBooks.size() < BORROW_LIMIT;
     }
 
     @Override
