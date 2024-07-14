@@ -1,15 +1,15 @@
 package com.example.demo.entity;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 public class User {
     private final String name;
-    private final Set<Book> borrowedBooks;
+    private final Set<Book> borrowedBooks = new HashSet<>();
 
-    public User(String name, Set<Book> borrowedBooks) {
+    public User(String name) {
         this.name = name;
-        this.borrowedBooks = borrowedBooks;
     }
 
     public String getName() {
@@ -18,6 +18,10 @@ public class User {
 
     public Set<Book> getBorrowedBooks() {
         return borrowedBooks;
+    }
+
+    public boolean borrowBook(String bookName) {
+        return borrowedBooks.add(new Book(bookName));
     }
 
     @Override
