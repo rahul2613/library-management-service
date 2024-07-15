@@ -1,17 +1,22 @@
 package com.example.demo.entity;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
 public class Library {
     private Map<Book, Integer> books;
 
-    public Library(Map<Book, Integer> books) {
-        this.books = books;
+    public Library() {
+        this.books = new HashMap<>();
     }
 
     public Map<Book, Integer> getBooks() {
         return books;
+    }
+
+    public void setBooks(Map<Book, Integer> books) {
+        this.books = books;
     }
 
     public boolean isBookAvailable(String bookName) {
